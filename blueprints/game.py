@@ -1,6 +1,5 @@
-# ============================================================================
-# blueprints/game.py - Game Blueprint
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
+# blueprints/game.py
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 import random
 
 game_bp = Blueprint('game', __name__)
@@ -135,9 +134,9 @@ def results():
     return render_template('results.html', players=players)
 
 # ============================================================================
-# blueprints/admin.py - Admin Blueprint
+# blueprints/admin.py
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -234,27 +233,3 @@ def delete_question(id):
     db.session.commit()
     flash('Question deleted successfully!')
     return redirect(url_for('admin.dashboard'))
-
-# ============================================================================
-# Create the directory structure and required files
-import os
-
-# Create directories
-os.makedirs('blueprints', exist_ok=True)
-os.makedirs('templates', exist_ok=True)
-os.makedirs('templates/admin', exist_ok=True)
-os.makedirs('static/css', exist_ok=True)
-
-# Create __init__.py files
-with open('blueprints/__init__.py', 'w') as f:
-    f.write('')
-
-print("Flask Bible Quiz Game created successfully!")
-print("\nTo run the application:")
-print("1. Make sure you have Flask and Flask-SQLAlchemy installed:")
-print("   pip install Flask Flask-SQLAlchemy")
-print("2. Run the application:")
-print("   python app.py")
-print("3. Access the game at http://localhost:5000")
-print("4. Admin login: username='admin', password='admin123'")
-print("5. Admin dashboard: http://localhost:5000/admin/dashboard")
