@@ -1,4 +1,3 @@
-<!-- templates/play.html -->
 {% extends "base.html" %}
 
 {% block title %}Playing - Bible Quiz{% endblock %}
@@ -11,7 +10,7 @@
                 <span>Question {{ question_number }} of {{ total_questions }}</span>
             </div>
             <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ progress }}%"></div>
+                <div class="progress-fill" style="width: %{{ progress }}%"></div>
             </div>
         </div>
 
