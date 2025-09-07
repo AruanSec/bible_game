@@ -23,27 +23,43 @@
                 <p><strong>Your answer:</strong>
                     {% if selected_answer == 'A' %}{{ question.option_a }}
                     {% elif selected_answer == 'B' %}{{ question.option_b }}
-                    {% elif selected_answer == 'C' %}{{ question.option_c }}
-                    {% elif selected_answer == 'D' %}{{ question.option_d }}
-                    {% else %}No answer provided{% endif %}
-                </p>
-                <p><strong>Correct answer:</strong>
-                    {% if question.correct_option == 'A' %}{{ question.option_a }}
-                    {% elif question.correct_option == 'B' %}{{ question.option_b }}
-                    {% elif question.correct_option == 'C' %}{{ question.option_c }}
-                    {% elif question.correct_option == 'D' %}{{ question.option_d }}
+                    {% else %}{{ question.option_c }}
                     {% endif %}
                 </p>
+
+                {% if not is_correct %}
+                <p><strong>Correct answer:</strong>
+                    {% if question.correct_answer == 'A' %}{{ question.option_a }}
+                    {% elif question.correct_answer == 'B' %}{{ question.option_b }}
+                    {% else %}{{ question.option_c }}
+                    {% endif %}
+                </p>
+                {% endif %}
             </div>
-            <p class="explanation">{{ question.explanation }}</p>
-        </div>
-        <div class="navigation-buttons">
-            {% if next_question %}
-            <a href="{{ url_for('quiz.question', question_id=next_question.id) }}" class="btn btn-primary">Next Question</a>
-            {% else %}
-            <a href="{{ url_for('quiz.results') }}" class="btn btn-primary">View Results</a>
+
+            {% if question.explanation %}
+            <div class="explanation">
+                <h3><i class="fas fa-lightbulb"></i> Explanation</h3>
+                <p>{{ question.explanation }}</p>
+            </div>
             {% endif %}
         </div>
+
+        <div class="scoreboard">
+            <h3><i class="fas fa-trophy"></i> Current Scores</h3>
+            <div class="scores">
+                {% for player in players %}
+                <div class="score-item">
+                    <span class="player-name">{{ player.first_name }} {{ player.last_name }}</span>
+                    <span class="score">{{ player.score }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <a href="{{ url_for('game.next_question') }}" class="btn btn-primary">
+            <i class="fas fa-arrow-right"></i> Next Question
+        </a>
     </div>
 </div>
 {% endblock %}
