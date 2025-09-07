@@ -1,0 +1,61 @@
+<!-- templates/setup.html -->
+{% extends "base.html" %}
+
+{% block title %}Game Setup - Bible Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="setup-card">
+        <h2><i class="fas fa-cog"></i> Game Setup</h2>
+
+        <form method="POST" action="{{ url_for('game.start_game') }}" class="setup-form">
+            <div class="form-group">
+                <label for="num_players">Number of Players:</label>
+                <select id="num_players" name="num_players" onchange="generatePlayerFields()" required>
+                    <option value="">Select number of players</option>
+                    <option value="1">1 Player</option>
+                    <option value="2">2 Players</option>
+                    <option value="3">3 Players</option>
+                    <option value="4">4 Players</option>
+                    <option value="5">5 Players</option>
+                    <option value="6">6 Players</option>
+                </select>
+            </div>
+
+            <div id="players-container"></div>
+
+            <button type="submit" class="btn btn-primary" id="start-btn" style="display:none;">
+                <i class="fas fa-play"></i> Start Game
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function generatePlayerFields() {
+        const numPlayers = document.getElementById('num_players').value;
+        const container = document.getElementById('players-container');
+        const startBtn = document.getElementById('start-btn');
+
+        container.innerHTML = '';
+
+        if (numPlayers) {
+            for (let i = 1; i <= numPlayers; i++) {
+                const playerDiv = document.createElement('div');
+                playerDiv.className = 'player-input';
+                playerDiv.innerHTML = `
+                <h3><i class="fas fa-user"></i> Player ${i}</h3>
+                <div class="name-inputs">
+                    <input type="text" name="player_${i}_first" placeholder="First Name" required>
+                    <input type="text" name="player_${i}_last" placeholder="Last Name" required>
+                </div>
+            `;
+                container.appendChild(playerDiv);
+            }
+            startBtn.style.display = 'block';
+        } else {
+            startBtn.style.display = 'none';
+        }
+    }
+</script>
+{% endblock %}
