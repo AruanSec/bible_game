@@ -1,0 +1,78 @@
+<!-- templates/play.html -->
+{% extends "base.html" %}
+
+{% block title %}
+Playing - Bible Quiz
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="game-header">
+        <div class="progress-section">
+            <div class="progress-info">
+                <span>Question {{ question_number }} of {{ total_questions }}</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ progress }}%"></div>
+            </div>
+        </div>
+
+        <div class="current-player">
+            <h3><i class="fas fa-user"></i> {{ current_player.first_name }} {{ current_player.last_name }}'s Turn</h3>
+        </div>
+    </div>
+
+    <div class="scoreboard">
+        <h3><i class="fas fa-trophy"></i> Scoreboard</h3>
+        <div class="scores">
+            {% for player in players %}
+            <div class="score-item {% if player.id == current_player.id %}active{% endif %}">
+                <span class="player-name">{{ player.first_name }} {{ player.last_name }}</span>
+                <span class="score">{{ player.score }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="question-card">
+        <div class="question-header">
+            <h2>Question {{ question_number }}</h2>
+        </div>
+        <div class="question-text">
+            <p>{{ question.question }}</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('game.answer') }}" class="options-form">
+            <div class="options">
+                <label class="option">
+                    <input type="radio" name="answer" value="A" required>
+                    <span class="option-text">
+                        <span class="option-letter">A</span>
+                        {{ question.option_a }}
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="answer" value="B" required>
+                    <span class="option-text">
+                        <span class="option-letter">B</span>
+                        {{ question.option_b }}
+                    </span>
+                </label>
+
+                <label class="option">
+                    <input type="radio" name="answer" value="C" required>
+                    <span class="option-text">
+                        <span class="option-letter">C</span>
+                        {{ question.option_c }}
+                    </span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-check"></i> Submit Answer
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
