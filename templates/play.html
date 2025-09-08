@@ -10,7 +10,7 @@
                 <span>Question {{ question_number }} of {{ total_questions }}</span>
             </div>
             <div class="progress-bar">
-                <div class="progress-fill" style="width: {{ progress }}%"></div>
+                <!--<div class="progress-fill" style="width: {{ progress }}%"></div>-->
             </div>
         </div>
 
@@ -70,72 +70,6 @@
                 <i class="fas fa-check"></i> Submit Answer
             </button>
         </form>
-    </div>
-</div>
-{% endblock %}
-
-<!-- Save this as templates/answer_result.html -->
-{% extends "base.html" %}
-
-{% block title %}Answer Result - Bible Quiz{% endblock %}
-
-{% block content %}
-<div class="container">
-    <div class="result-card">
-        <div class="result-header {% if is_correct %}correct{% else %}incorrect{% endif %}">
-            {% if is_correct %}
-            <i class="fas fa-check-circle"></i>
-            <h2>Correct!</h2>
-            {% else %}
-            <i class="fas fa-times-circle"></i>
-            <h2>Incorrect</h2>
-            {% endif %}
-        </div>
-
-        <div class="result-details">
-            <p class="player-name">{{ current_player.first_name }} {{ current_player.last_name }}</p>
-
-            <div class="answer-info">
-                <p><strong>Your answer:</strong>
-                    {% if selected_answer == 'A' %}{{ question.option_a }}
-                    {% elif selected_answer == 'B' %}{{ question.option_b }}
-                    {% else %}{{ question.option_c }}
-                    {% endif %}
-                </p>
-
-                {% if not is_correct %}
-                <p><strong>Correct answer:</strong>
-                    {% if question.correct_answer == 'A' %}{{ question.option_a }}
-                    {% elif question.correct_answer == 'B' %}{{ question.option_b }}
-                    {% else %}{{ question.option_c }}
-                    {% endif %}
-                </p>
-                {% endif %}
-            </div>
-
-            {% if question.explanation %}
-            <div class="explanation">
-                <h3><i class="fas fa-lightbulb"></i> Explanation</h3>
-                <p>{{ question.explanation }}</p>
-            </div>
-            {% endif %}
-        </div>
-
-        <div class="scoreboard">
-            <h3><i class="fas fa-trophy"></i> Current Scores</h3>
-            <div class="scores">
-                {% for player in players %}
-                <div class="score-item">
-                    <span class="player-name">{{ player.first_name }} {{ player.last_name }}</span>
-                    <span class="score">{{ player.score }}</span>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <a href="{{ url_for('next_question') }}" class="btn btn-primary">
-            <i class="fas fa-arrow-right"></i> Next Question
-        </a>
     </div>
 </div>
 {% endblock %}
