@@ -1,75 +1,49 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block title %}Playing - Bible Quiz{% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Bible Quiz Game{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
 
-{% block content %}
-<div class="container">
-    <div class="game-header">
-        <div class="progress-section">
-            <div class="progress-info">
-                <span>Question {{ question_number }} of {{ total_questions }}</span>
-            </div>
-            <div class="progress-bar">
-                <div class="progress-fill" style="width: %{{ progress }}%"></div>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="nav-title"><i class="fas fa-book"></i> Bible Quiz Game</h1>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a>
+                {% if session.admin_logged_in %}
+                <a href="{{ url_for('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="{{ url_for('admin_logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                {% else %}
+                <a href="{{ url_for('admin_login') }}"><i class="fas fa-user-shield"></i> Admin</a>
+                {% endif %}
             </div>
         </div>
+    </nav>
 
-        <div class="current-player">
-            <h3><i class="fas fa-user"></i> {{ current_player.first_name }} {{ current_player.last_name }}'s Turn</h3>
-        </div>
-    </div>
-
-    <div class="scoreboard">
-        <h3><i class="fas fa-trophy"></i> Scoreboard</h3>
-        <div class="scores">
-            {% for player in players %}
-            <div class="score-item {% if player.id == current_player.id %}active{% endif %}">
-                <span class="player-name">{{ player.first_name }} {{ player.last_name }}</span>
-                <span class="score">{{ player.score }}</span>
+    <main class="main-content">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for message in messages %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle"></i> {{ message }}
             </div>
             {% endfor %}
         </div>
-    </div>
+        {% endif %}
+        {% endwith %}
 
-    <div class="question-card">
-        <div class="question-header">
-            <h2>Question {{ question_number }}</h2>
-        </div>
-        <div class="question-text">
-            <p>{{ question.question }}</p>
-        </div>
+        {% block content %}{% endblock %}
+    </main>
 
-        <form method="POST" action="{{ url_for('game.answer') }}" class="options-form">
-            <div class="options">
-                <label class="option">
-                    <input type="radio" name="answer" value="A" required>
-                    <span class="option-text">
-                        <span class="option-letter">A</span>
-                        {{ question.option_a }}
-                    </span>
-                </label>
+    <footer class="footer">
+        <p>&copy; 2024 Bible Quiz Game. Created with <i class="fas fa-heart"></i> for learning.</p>
+    </footer>
+</body>
 
-                <label class="option">
-                    <input type="radio" name="answer" value="B" required>
-                    <span class="option-text">
-                        <span class="option-letter">B</span>
-                        {{ question.option_b }}
-                    </span>
-                </label>
-
-                <label class="option">
-                    <input type="radio" name="answer" value="C" required>
-                    <span class="option-text">
-                        <span class="option-letter">C</span>
-                        {{ question.option_c }}
-                    </span>
-                </label>
-            </div>
-
-            <button type="submit" class="btn btn-primary">
-                <i class="fas fa-check"></i> Submit Answer
-            </button>
-        </form>
-    </div>
-</div>
-{% endblock %}
+</html>

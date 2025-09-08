@@ -1,4 +1,3 @@
-<!-- templates/admin/dashboard.html -->
 {% extends "base.html" %}
 
 {% block title %}Admin Dashboard - Bible Quiz{% endblock %}
@@ -7,7 +6,7 @@
 <div class="container">
     <div class="admin-header">
         <h1><i class="fas fa-tachometer-alt"></i> Admin Dashboard</h1>
-        <a href="{{ url_for('admin.add_question') }}" class="btn btn-primary">
+        <a href="{{ url_for('add_question') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> Add New Question
         </a>
     </div>
@@ -42,10 +41,10 @@
                         endif %}</td>
                     <td class="correct-answer">{{ question.correct_answer }}</td>
                     <td class="actions">
-                        <a href="{{ url_for('admin.edit_question', id=question.id) }}" class="btn btn-sm btn-secondary">
+                        <a href="{{ url_for('edit_question', id=question.id) }}" class="btn btn-sm btn-secondary">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <a href="{{ url_for('admin.delete_question', id=question.id) }}" class="btn btn-sm btn-danger"
+                        <a href="{{ url_for('delete_question', id=question.id) }}" class="btn btn-sm btn-danger"
                             onclick="return confirm('Are you sure you want to delete this question?')">
                             <i class="fas fa-trash"></i> Delete
                         </a>
@@ -57,7 +56,7 @@
         {% else %}
         <div class="empty-state">
             <i class="fas fa-question-circle"></i>
-            <p>No questions found. <a href="{{ url_for('admin.add_question') }}">Add your first question</a>.</p>
+            <p>No questions found. <a href="{{ url_for('add_question') }}">Add your first question</a>.</p>
         </div>
         {% endif %}
     </div>

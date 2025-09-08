@@ -1,4 +1,3 @@
-<!-- templates/results.html -->
 {% extends "base.html" %}
 
 {% block title %}Game Results - Bible Quiz{% endblock %}
@@ -34,12 +33,48 @@
         </div>
 
         <div class="results-actions">
-            <a href="{{ url_for('game.setup') }}" class="btn btn-primary">
+            <a href="{{ url_for('setup') }}" class="btn btn-primary">
                 <i class="fas fa-redo"></i> Play Again
             </a>
             <a href="{{ url_for('index') }}" class="btn btn-secondary">
                 <i class="fas fa-home"></i> Home
             </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+<!-- Save this as templates/admin/login.html -->
+{% extends "base.html" %}
+
+{% block title %}Admin Login - Bible Quiz{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="login-card">
+        <div class="login-header">
+            <i class="fas fa-user-shield"></i>
+            <h2>Admin Login</h2>
+        </div>
+
+        <form method="POST" class="login-form">
+            <div class="form-group">
+                <label for="username"><i class="fas fa-user"></i> Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </form>
+
+        <div class="login-info">
+            <p><small>Default credentials: admin / admin123</small></p>
         </div>
     </div>
 </div>
