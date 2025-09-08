@@ -141,20 +141,38 @@ def next_question():
 @app.route('/results')
 def results():
     if not session.get('game_active'):
+        flash('No active game found. Please start a new game.')
         return redirect(url_for('index'))
     
-    players = session['players']
-    # Sort players by score (descending)
-    players.sort(key=lambda x: x['score'], reverse=True)
-    
-    # Clear session
-    session.pop('game_active', None)
-    session.pop('players', None)
-    session.pop('question_ids', None)
-    session.pop('current_question', None)
-    session.pop('current_player', None)
-    
-    return render_template('results.html', players=players)
+    try:
+        players = session.get('players', [])
+        
+        if not players:
+            flash('No player data found. Please start a new game.')
+            return redirect(url_for('setup'))
+        
+        # Sort players by score (descending)
+        players_copy = players.copy()
+        players_copy.sort(key=lambda x: x.get('score', 0), reverse=True)
+        
+        # Clear session
+        session.pop('game_active', None)
+        session.pop('players', None)
+        session.pop('question_ids', None)
+        session.pop('current_question', None)
+        session.pop('current_player', None)
+        
+        return render_template('results.html', players=players_copy)
+        
+    except (KeyError, TypeError) as e:
+        flash('Error displaying results. Game data may be corrupted.')
+        # Clear corrupted session
+        session.pop('game_active', None)
+        session.pop('players', None)
+        session.pop('question_ids', None)
+        session.pop('current_question', None)
+        session.pop('current_player', None)
+        return redirect(url_for('index'))
 
 # Admin Routes
 @app.route('/admin/login', methods=['GET', 'POST'])
