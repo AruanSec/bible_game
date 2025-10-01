@@ -498,4 +498,4 @@ if __name__ == '__main__':
     print("🌐 Starting server at http://localhost:5000")
     print("🔐 Admin credentials: username=admin, password=admin123")
     
-    app.run(debug=True)
+    app.run()
